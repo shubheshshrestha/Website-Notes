@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Note, NoteType
-from .forms import NoteForm
+from .forms import NoteForm, NoteFormType
 
 # Create your views here.
 
@@ -46,5 +46,14 @@ def edit_note(request,pk):
     form_obj = NoteForm(instance=note_obj)
     data = {'form':form_obj}
     return render(request,'edit_note.html', context=data)
+
+def create_type(request):
+    type_form_obj = NoteFormType()
+    if request.method == "POST":
+        type_form_obj = NoteFormType(data=request.POST)
+        if type_form_obj.is_valid():
+            type_form_obj.save()
+    data = {"form_type": type_form_obj}
+    return render(request, "create_type.html", context=data)
 
 

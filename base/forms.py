@@ -12,3 +12,10 @@ class NoteForm(ModelForm):
             "description" : Textarea(attrs={"class":"form-control"})}
         
 
+class NoteFormType(ModelForm):
+    class Meta:
+        model = NoteType
+        fields = ["name"]
+        widgets = {
+            "name": TextInput(attrs={"class":"form-control"})
+        }
