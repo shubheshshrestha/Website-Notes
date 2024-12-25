@@ -5,7 +5,7 @@ from .forms import NoteForm
 # Create your views here.
 
 def home(request):
-    note_objs = Note.objects.all()
+    note_objs = Note.objects.all().order_by('id')
     data = {'notes': note_objs}
     return render(request,'index.html', context= data)
 
@@ -36,4 +36,15 @@ def create_note(request):
             note_form_obj.save()
     data = {'form':note_form_obj}
     return render(request, "create_note.html", context=data)
+
+def edit_note(request,pk):
+    note_obj = Note.objects.get(id=pk)
+    if request.method == 'POST':
+        form_obj = NoteForm(instance=note_obj, data=request.POST)
+        if form_obj.is_valid():
+            form_obj.save()
+    form_obj = NoteForm(instance=note_obj)
+    data = {'form':form_obj}
+    return render(request,'edit_note.html', context=data)
+
 
