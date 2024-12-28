@@ -25,8 +25,31 @@
               <td>{{note.name}}</td>
               <td>{{note.description}}</td>
               <td>{{note.type.name}}</td>
-              <td><a href="{% url 'edit-note' pk=note.id %}"><button class="btn btn-warning">Edit</button></a></td>
+              <td><a href="{% url 'edit-note' pk=note.id %}"><button class="btn btn-warning">Edit</button></a>
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#{{note.id}}">
+                  Delete
+                </button>
+              </td>
             </tr>
+            
+            <div class="modal fade" id="{{note.id}}" tabindex="-1" aria-labelledby="{{note.id}}" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="{{note.id}}">Warning!</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    Are you sure?
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Negative</button>
+                    <a href="{% url 'delete-note' pk=note.id %}"><button type="button" class="btn btn-danger">Confirm Delete</button></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           {% endfor %}
         </tbody>
       </table>
